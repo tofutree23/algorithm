@@ -43,3 +43,25 @@ console.log(getSum(5));
 const getMinValue = (arr) => Math.min(...arr);
 
 console.log(getMinValue([5, 4, 2, 6, 3, 11, 1]));
+
+/** 6. Get odd number in array, return sum of odd and minimum odd  */
+const getOdd = (arr) => {
+  const oddArr = arr.filter((num) => num % 2 === 1);
+  const min = Math.min(...oddArr);
+  const sum = oddArr.reduce((prev, cur) => {
+    return (prev += cur);
+  }, 0);
+  return { min, sum };
+};
+
+console.log(getOdd([2, 3, 4, 5, 6, 7]));
+
+/** 7. Ten-part system */
+const getViolated = (date, numberPlateArr) => {
+  return numberPlateArr.reduce(
+    (prev, cur) => (cur % 10 === date ? prev + 1 : prev),
+    0
+  );
+};
+
+console.log(getViolated(3, [23, 54, 34, 67, 23, 75]));
