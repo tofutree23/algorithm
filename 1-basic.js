@@ -65,3 +65,32 @@ const getViolated = (date, numberPlateArr) => {
 };
 
 console.log(getViolated(3, [23, 54, 34, 67, 23, 75]));
+
+/** 8. I know seven dwarfs but there's nine! */
+const getOriginalDwarfs = (arr) => {
+  const sum = arr.reduce((prev, cur) => prev + cur, 0);
+  /**
+   * I don't wanna use double for statement......😅
+   * Nice try, but the readability is bad...😞
+   */
+  arr.forEach((num, idx) => {
+    if (arr[idx + 1]) {
+      arr.forEach((innerNum, innerIdx) => {
+        if (innerIdx !== 0) {
+          if (sum - (num + innerNum) === 100) {
+            arr.splice(innerIdx, 1);
+            arr.splice(idx, 1);
+          }
+        }
+      });
+    }
+  });
+
+  return arr;
+};
+
+console.log(getOriginalDwarfs([20, 7, 23, 19, 10, 8, 13, 15, 25]));
+
+/** 9. A to # */
+const convertAtoSharp = (word) => word.replaceAll(/A/gi, "#");
+console.log(convertAtoSharp("BANaNA"));
