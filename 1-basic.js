@@ -94,3 +94,84 @@ console.log(getOriginalDwarfs([20, 7, 23, 19, 10, 8, 13, 15, 25]));
 /** 9. A to # */
 const convertAtoSharp = (word) => word.replaceAll(/A/gi, "#");
 console.log(convertAtoSharp("BANaNA"));
+
+/** 10. Count alphabet */
+const getRCount = (text) => text.split("R").length - 1;
+console.log(getRCount("COMPUTERPROGRAMMING"));
+
+/** 11. Find uppercase */
+const findUppercase = (text) => {
+  let uppercaseCnt = 0;
+  const regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-+<>@\#$%&\\\=\(\'\"]/gi;
+  const filteredText = text.replaceAll(regExp, "");
+
+  for (let letter of filteredText) {
+    if (letter === letter.toLocaleUpperCase()) uppercaseCnt++;
+  }
+
+  return uppercaseCnt;
+};
+console.log(findUppercase("HeLloW?"));
+
+/** 12. Convert all characters into uppercase */
+const convertAllUpper = (text) => text.toLocaleUpperCase();
+console.log(convertAllUpper("HelLow?"));
+
+/** 13. Switch upper and lower case */
+const switchCase = (text) => {
+  let answer = "";
+  for (let letter of text) {
+    if (letter === letter.toLocaleUpperCase())
+      answer += letter.toLocaleLowerCase();
+    else if (letter === letter.toLocaleLowerCase())
+      answer += letter.toLocaleUpperCase();
+  }
+  return answer;
+};
+console.log(switchCase("HeLlOw?!"));
+
+/** 14. The longest string */
+const findLongest = (textArr) => {
+  return textArr.reduce((prev, cur) => {
+    let longest = "";
+    if (cur.length > prev.length) longest = cur;
+    else longest = prev;
+    return longest;
+  }, "");
+};
+console.log(findLongest(["teacher", "time", "student", "beautiful", "good"]));
+
+/** 15. FInd a middle letter. If length of word is even, find two middle letters */
+const findMiddleLetter = (text) => {
+  const middleLocation = Math.floor(text.length / 2);
+  if (text.length % 2 === 1)
+    return text.substring(middleLocation, middleLocation + 1);
+  else return text.substring(middleLocation - 1, middleLocation + 1);
+};
+console.log(findMiddleLetter("hello"));
+
+/** 16. Remove duplicate characters */
+const deleteDuplicatedCharacters = (text) => {
+  let answer = "";
+  for (let letter of text) {
+    if (!answer.includes(letter)) answer += letter;
+  }
+  return answer;
+};
+console.log(deleteDuplicatedCharacters("hello, world! this is an apple!"));
+
+/** 17. Remove duplicate sentences */
+const deleteDuplicatedSentences = (textArr) => {
+  const textSet = new Set(textArr);
+  return [...textSet];
+};
+console.log(
+  deleteDuplicatedSentences([
+    "good",
+    "morning",
+    "good",
+    "afternoon",
+    "good",
+    "night",
+  ])
+);
