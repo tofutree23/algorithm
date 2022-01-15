@@ -46,3 +46,31 @@ console.log(
     ["paper", "paper", "rock", "scissors", "rock"]
   )
 );
+
+/** 4. If it's consecutive correct, accumulate. */
+const accAnswer = (ansArr) => {
+  let extra = 0;
+  return ansArr.reduce((prev, cur) => {
+    if (cur) {
+      extra++;
+      prev += extra;
+    } else {
+      extra = 0;
+    }
+    return prev;
+  }, 0);
+};
+console.log(accAnswer([1, 0, 1, 1, 1, 0, 0, 1, 1, 0]));
+
+/** 5. Get students ranking */
+const getRank = (pointArr) => {
+  const rankArr = Array(pointArr.length).fill(1);
+  pointArr.forEach((point, idx) => {
+    for (let i = 0; i < pointArr.length; i++) {
+      if (point < pointArr[i]) rankArr[idx]++;
+    }
+  });
+
+  return rankArr;
+};
+console.log(getRank([87, 87, 92, 100, 76]));
