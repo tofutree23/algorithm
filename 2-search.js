@@ -74,3 +74,50 @@ const getRank = (pointArr) => {
   return rankArr;
 };
 console.log(getRank([87, 87, 92, 100, 76]));
+
+/** 6. Max sum of grid */
+const getMaxOfGrid = (gridArr) => {
+  let maximum = 0;
+  /** Row vs Col */
+  for (let i = 0; i < gridArr.length; i++) {
+    let rowMax = (colMax = 0);
+    for (let j = 0; j < gridArr[i].length; j++) {
+      rowMax += gridArr[i][j];
+      colMax += gridArr[j][i];
+    }
+    maximum = Math.max(maximum, rowMax, colMax);
+  }
+
+  /** Diagonal */
+  let rightDiagonal = (leftDiagonal = 0);
+  for (let i = 0; i < gridArr.length; i++) {
+    rightDiagonal += gridArr[i][i];
+    leftDiagonal += gridArr[i][gridArr[i].length - i - 1];
+  }
+  return Math.max(maximum, rightDiagonal, leftDiagonal);
+};
+console.log(
+  getMaxOfGrid([
+    [10, 13, 10, 12, 15],
+    [12, 39, 30, 23, 11],
+    [11, 25, 50, 53, 15],
+    [19, 27, 29, 37, 27],
+    [19, 13, 30, 13, 19],
+  ])
+);
+
+/** 7. Map of peak */
+const getPeak = (mapArr) => {
+  let peakCnt = 0;
+
+  return peakCnt;
+};
+console.log(
+  getPeak([
+    [5, 3, 7, 2, 3],
+    [3, 7, 1, 6, 1],
+    [7, 2, 5, 3, 4],
+    [4, 3, 6, 4, 1],
+    [8, 7, 3, 5, 2],
+  ])
+);
