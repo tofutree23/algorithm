@@ -106,9 +106,41 @@ console.log(
   ])
 );
 
-/** 7. Map of peak */
+/** 7. Map of peak (Peak is higher than round) */
 const getPeak = (mapArr) => {
   let peakCnt = 0;
+
+  const direction = [
+    [-1, 0], // up
+    [0, 1], // right
+    [1, 0], // down
+    [0, -1], // left
+  ];
+  mapArr.forEach((rowArr, rowIdx) => {
+    rowArr.forEach((_, heightIdx) => {
+      const isPeak = direction.every((eachDirection) => {
+        const row = rowIdx + eachDirection[0];
+        const column = heightIdx + eachDirection[1];
+
+        // This has to be in the mapArr range
+        if (
+          row >= 0 &&
+          row < mapArr.length &&
+          column >= 0 &&
+          column < rowArr.length
+        ) {
+          const roundLocation = mapArr[row][column];
+          const currentLocation = mapArr[rowIdx][heightIdx];
+
+          return roundLocation < currentLocation;
+        } else {
+          return true;
+        }
+      });
+
+      if (isPeak) peakCnt++;
+    });
+  });
 
   return peakCnt;
 };
