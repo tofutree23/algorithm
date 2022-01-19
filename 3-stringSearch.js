@@ -24,3 +24,9 @@ const getNumbersInText = (text) => {
   );
 };
 console.log(getNumbersInText("tge0a1h205er"));
+
+/** 4. Calculate the distance away from e */
+const calcDistance = (text) => {
+  return text;
+};
+console.log(calcDistance("teachermode"));
