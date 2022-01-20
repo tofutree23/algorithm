@@ -26,7 +26,46 @@ const getNumbersInText = (text) => {
 console.log(getNumbersInText("tge0a1h205er"));
 
 /** 4. Calculate the distance away from e */
-const calcDistance = (text) => {
-  return text;
+const calcDistance = (text, e) => {
+  const distanceArr = [];
+  const textArr = text.split("");
+
+  let distance = 0;
+  /** left to right */
+  textArr.forEach((character) => {
+    if (character !== e) distance++;
+    else distance = 0;
+    distanceArr.push(distance);
+  });
+
+  distance = 0;
+  /** right to left */
+  textArr.reverse().forEach((character, idx) => {
+    const originIdx = textArr.length - 1 - idx;
+    if (character !== e) distance++;
+    else distance = 0;
+
+    if (distanceArr[originIdx] > distance) {
+      distanceArr[originIdx] = distance;
+    }
+  });
+  return distanceArr;
 };
-console.log(calcDistance("teachermode"));
+console.log(calcDistance("teachermode", "e"));
+
+/** 5. Compressed text */
+const compressor = (text) => {
+  let compressed = "";
+
+  let counter = 1;
+  text.split("").forEach((character, idx) => {
+    if (text.split("")[idx - 1] === character) counter++;
+    else {
+      if (counter > 1) compressed += counter;
+      compressed += character;
+      counter = 1;
+    }
+  });
+  return compressed;
+};
+console.log(compressor("KKHSSSSSSSE"));
