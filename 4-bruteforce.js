@@ -37,6 +37,13 @@ const isPrime = (number) => {
   return true;
 };
 
-const getReversedPrime = (numArr) => {};
+const getReversedPrime = (numArr) => {
+  const answer = numArr.reduce((prev, cur) => {
+    const reversedNumber = Number(cur.toString().split("").reverse().join(""));
+    if (isPrime(reversedNumber)) prev.push(reversedNumber);
+    return prev;
+  }, []);
+  return answer;
+};
 
 console.log(getReversedPrime([32, 55, 62, 20, 250, 370, 200, 30, 100]));
