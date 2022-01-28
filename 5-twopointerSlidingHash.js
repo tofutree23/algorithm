@@ -39,3 +39,21 @@ const getCommonElement = (elementArr1, elementArr2) => {
   return commonArr;
 };
 console.log(getCommonElement([1, 3, 9, 5, 2], [3, 2, 5, 7, 8]));
+
+/** 3. Continuous sequence - make 6 */
+const makeSixArrCount = (arr) => {
+  let answer = 0;
+  let followPointer = 0;
+  let sum = 0;
+
+  for (let leadPointer = 0; leadPointer < arr.length; leadPointer++) {
+    sum += arr[leadPointer];
+    if (sum === 6) answer++;
+    while (sum >= 6) {
+      sum -= arr[followPointer++];
+      if (sum === 6) answer++;
+    }
+  }
+  return answer;
+};
+console.log(makeSixArrCount([1, 2, 1, 3, 1, 1, 1, 2]));
