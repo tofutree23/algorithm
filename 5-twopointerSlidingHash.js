@@ -57,3 +57,20 @@ const makeSixArrCount = (arr) => {
   return answer;
 };
 console.log(makeSixArrCount([1, 2, 1, 3, 1, 1, 1, 2]));
+
+/** 4. Continuous sequence - lower than 5 */
+const makeLowerThanFiveCount = (arr) => {
+  let answer = 0;
+  let sum = 0;
+  let followPointer = 0;
+
+  for (let leadPointer = 0; leadPointer < arr.length; leadPointer++) {
+    sum += arr[leadPointer];
+    while (sum > 5) {
+      sum -= arr[followPointer++];
+    }
+    answer += leadPointer - followPointer + 1;
+  }
+  return answer;
+};
+console.log(makeLowerThanFiveCount([1, 3, 1, 2, 3]));
