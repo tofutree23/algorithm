@@ -74,3 +74,43 @@ const makeLowerThanFiveCount = (arr) => {
   return answer;
 };
 console.log(makeLowerThanFiveCount([1, 3, 1, 2, 3]));
+
+/** 5. Maximum sales */
+const getThreeDaysMaximumSales = (arr) => {
+  let answer = 0;
+  let sum = 0;
+
+  // initiate
+  for (let i = 0; i < 3; i++) sum += arr[i];
+  answer = sum;
+
+  for (let i = 3; i < arr.length; i++) {
+    sum += arr[i] - arr[i - 3];
+    answer = Math.max(answer, sum);
+  }
+
+  return answer;
+};
+console.log(getThreeDaysMaximumSales([12, 15, 11, 20, 25, 10, 20, 19, 13, 15]));
+
+/** 6. Election */
+const getWinner = (text) => {
+  const candidatesMap = new Map();
+  for (let word of text) {
+    if (candidatesMap.has(word))
+      candidatesMap.set(word, candidatesMap.get(word) + 1);
+    else candidatesMap.set(word, 1);
+  }
+
+  let candidate = "";
+  let max = 0;
+  candidatesMap.forEach((value, key) => {
+    if (value > max) {
+      max = value;
+      candidate = key;
+    }
+  });
+
+  return candidate;
+};
+console.log(getWinner("BACBACCACCBDEDE"));
