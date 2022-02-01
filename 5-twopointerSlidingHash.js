@@ -114,3 +114,23 @@ const getWinner = (text) => {
   return candidate;
 };
 console.log(getWinner("BACBACCACCBDEDE"));
+
+/** 7. Anagram */
+const getIsAnagram = (text1, text2) => {
+  const textHash = new Map();
+  for (let t of text1) {
+    if (textHash.has(t)) textHash.set(t, textHash.get(t) + 1);
+    else textHash.set(t, 1);
+  }
+
+  for (let t of text2) {
+    if (!textHash.has(t)) return "false";
+    textHash.set(t, textHash.get(t) - 1);
+  }
+
+  const isAllZero = [...textHash.values()].filter((value) => value !== 0);
+
+  if (isAllZero.length === 0) return "true";
+  else return "false";
+};
+console.log(getIsAnagram("AbaAeCe", "baeeACA"));
