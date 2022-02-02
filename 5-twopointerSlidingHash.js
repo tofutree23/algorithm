@@ -134,3 +134,7 @@ const getIsAnagram = (text1, text2) => {
   else return "false";
 };
 console.log(getIsAnagram("AbaAeCe", "baeeACA"));
+
+/** 8. Find all anagram */
+const findAllAnagram = (text) => {};
+console.log(findAllAnagram(""));
