@@ -154,21 +154,10 @@ const findAllAnagramCount = (comparison, targetText) => {
   }
   // <- targetHash === { a: 1, b: 1, c: 1 }
 
-  const comparisonHash = new Map();
   // Sliding window
-  for (let i = 0; i < targetText.length - 1; i++) {
-    if (comparisonHash.has(comparison[i]))
-      comparisonHash.set(comparison[i], comparisonHash.get(comparison[i]) + 1);
-    else comparisonHash.set(comparison[i], 1);
-  }
-  // <- comparisonHash.length === 2
-
+  const comparisonHash = new Map();
   let followPointer = 0;
-  for (
-    let leadPointer = targetText.length - 1;
-    leadPointer < comparison.length;
-    leadPointer++
-  ) {
+  for (let leadPointer = 0; leadPointer < comparison.length; leadPointer++) {
     if (comparisonHash.has(comparison[leadPointer]))
       comparisonHash.set(
         comparison[leadPointer],
@@ -176,17 +165,20 @@ const findAllAnagramCount = (comparison, targetText) => {
       );
     else comparisonHash.set(comparison[leadPointer], 1);
 
-    if (compareSameHash(targetHash, comparisonHash)) answer++;
+    // only add comparison hash until leadPointer greater than or equal 2
+    if (leadPointer >= 2) {
+      if (compareSameHash(targetHash, comparisonHash)) answer++;
 
-    comparisonHash.set(
-      comparison[followPointer],
-      comparisonHash.get(comparison[followPointer]) - 1
-    );
+      comparisonHash.set(
+        comparison[followPointer],
+        comparisonHash.get(comparison[followPointer]) - 1
+      );
 
-    if (comparisonHash.get(comparison[followPointer]) <= 0)
-      comparisonHash.delete(comparison[followPointer]);
+      if (comparisonHash.get(comparison[followPointer]) <= 0)
+        comparisonHash.delete(comparison[followPointer]);
 
-    followPointer++;
+      followPointer++;
+    }
   }
 
   return answer;
