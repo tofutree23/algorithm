@@ -136,5 +136,59 @@ const getIsAnagram = (text1, text2) => {
 console.log(getIsAnagram("AbaAeCe", "baeeACA"));
 
 /** 8. Find all anagram */
-const findAllAnagram = (text) => {};
-console.log(findAllAnagram(""));
+const compareSameHash = (hash1, hash2) => {
+  if (hash1.size !== hash2.size) return false;
+
+  for (const [key, value] of hash1) {
+    if (!hash2.has(key) || hash2.get(key) !== value) return false;
+  }
+
+  return true;
+};
+const findAllAnagramCount = (comparison, targetText) => {
+  let answer = 0;
+  const targetHash = new Map();
+  for (let t of targetText) {
+    if (targetHash.has(t)) targetHash.set(t, targetHash.get(t) + 1);
+    else targetHash.set(t, 1);
+  }
+  // <- targetHash === { a: 1, b: 1, c: 1 }
+
+  const comparisonHash = new Map();
+  // Sliding window
+  for (let i = 0; i < targetText.length - 1; i++) {
+    if (comparisonHash.has(comparison[i]))
+      comparisonHash.set(comparison[i], comparisonHash.get(comparison[i]) + 1);
+    else comparisonHash.set(comparison[i], 1);
+  }
+  // <- comparisonHash.length === 2
+
+  let followPointer = 0;
+  for (
+    let leadPointer = targetText.length - 1;
+    leadPointer < comparison.length;
+    leadPointer++
+  ) {
+    if (comparisonHash.has(comparison[leadPointer]))
+      comparisonHash.set(
+        comparison[leadPointer],
+        comparisonHash.get(comparison[leadPointer]) + 1
+      );
+    else comparisonHash.set(comparison[leadPointer], 1);
+
+    if (compareSameHash(targetHash, comparisonHash)) answer++;
+
+    comparisonHash.set(
+      comparison[followPointer],
+      comparisonHash.get(comparison[followPointer]) - 1
+    );
+
+    if (comparisonHash.get(comparison[followPointer]) <= 0)
+      comparisonHash.delete(comparison[followPointer]);
+
+    followPointer++;
+  }
+
+  return answer;
+};
+console.log(findAllAnagramCount("bacaAacba", "abc"));
