@@ -125,3 +125,33 @@ const getIronRod = (s) => {
   return answer;
 };
 console.log(getIronRod("()(((()())(())()))(())"));
+
+/** 6. Save princess */
+const getPrince = (princes, count) => {
+  const princeQueue = Array(princes)
+    .fill(null)
+    .map((_, i) => i + 1);
+
+  while (princeQueue.length > 1) {
+    for (let i = 1; i < count; i++) princeQueue.push(princeQueue.shift());
+    princeQueue.shift();
+  }
+
+  return princeQueue[0];
+};
+console.log(getPrince(8, 3));
+
+/** 7. Is required? */
+const isRequired = (req, my) => {
+  const reqList = req.split("");
+  const myList = my.split("");
+
+  for (let item of myList) {
+    if (reqList.includes(item) && reqList.shift() !== item) return false;
+  }
+
+  if (reqList.length > 0) return false;
+
+  return true;
+};
+console.log(isRequired("CBA", "CBDAGE"));
