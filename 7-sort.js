@@ -49,3 +49,24 @@ const insert = (arr) => {
   return arr;
 };
 console.log(insert([11, 7, 5, 6, 10, 9]));
+
+/** 5. LRU (Least Recently Used) */
+const setCache = (tasks) => {
+  const answer = Array(5).fill(0);
+  tasks.forEach((item) => {
+    let position = -1; // not used task recently.. aka miss
+    if (answer.includes(item)) {
+      position = answer.indexOf(item);
+    }
+
+    if (position !== -1) {
+      answer.splice(answer.indexOf(item), 1);
+    }
+    answer.unshift(item);
+
+    if (answer.length > 5) answer.pop();
+  });
+
+  return answer;
+};
+console.log(setCache([1, 2, 3, 2, 6, 2, 3, 5, 7]));
