@@ -70,3 +70,17 @@ const setCache = (tasks) => {
   return answer;
 };
 console.log(setCache([1, 2, 3, 2, 6, 2, 3, 5, 7]));
+
+/** 6. Compore with original array */
+const compareArray = (arr) => {
+  const answer = [];
+  const originalArr = [...arr].sort();
+
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] !== originalArr[i]) answer.push(i + 1);
+  }
+
+  return answer;
+};
+console.log(compareArray([120, 125, 152, 130, 135, 135, 143, 127, 160]));
+console.log(compareArray([120, 130, 150, 150, 130, 150]));
