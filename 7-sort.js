@@ -103,3 +103,44 @@ console.log(
     [3, 6],
   ])
 );
+
+/** 8. Assing meeting room
+ * It should be sorted based on the meeting that ends first.
+ * When sorted based on the meeting that starts first, the optimal solution cannot be derived because the end time is unknown.
+ */
+const assign = (reservations) => {
+  let answer = 0;
+  let endtime = 0;
+
+  /** sort array with endtime */
+  reservations.sort((a, b) => {
+    /** if endtimes are same, sort with starttime */
+    if (a[1] === b[1]) return a[0] - b[0];
+    else return a[1] - b[1];
+  });
+
+  reservations.forEach((reservation) => {
+    if (reservation[0] >= endtime) {
+      answer++;
+      endtime = reservation[1];
+    }
+  });
+
+  return answer;
+};
+console.log(
+  assign([
+    [1, 4],
+    [2, 3],
+    [3, 5],
+    [4, 6],
+    [5, 7],
+  ])
+);
+console.log(
+  assign([
+    [3, 3],
+    [2, 3],
+    [1, 3],
+  ])
+);
