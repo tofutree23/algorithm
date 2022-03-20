@@ -144,3 +144,34 @@ console.log(
     [1, 3],
   ])
 );
+
+/** 9. Marriage */
+const getMaxPopulation = (guests) => {
+  let max = 0;
+  const timeline = [];
+  guests.forEach(([arrived, leaved]) => {
+    timeline.push([arrived, "arrived"]);
+    timeline.push([leaved, "leaved"]);
+  });
+  timeline.sort((a, b) => {
+    // count leave first
+    if (a[0] === b[0]) return b[1].charCodeAt() - a[1].charCodeAt();
+    return a[0] - b[0];
+  });
+  let currentPopulation = 0;
+  timeline.forEach(([_, state]) => {
+    if (state === "arrived") currentPopulation++;
+    else currentPopulation--;
+    max = Math.max(max, currentPopulation);
+  });
+  return max;
+};
+console.log(
+  getMaxPopulation([
+    [14, 18],
+    [12, 15],
+    [15, 20],
+    [20, 30],
+    [5, 14],
+  ])
+);
