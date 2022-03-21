@@ -175,3 +175,54 @@ console.log(
     [5, 14],
   ])
 );
+
+/** 10. Binary search - Return array index */
+const binary = (arr, number) => {
+  arr.sort((a, b) => a - b);
+  let left = 0;
+  let right = arr.length - 1;
+
+  let mid;
+  while (left <= right) {
+    mid = Math.floor((left + right) / 2);
+    if (arr[mid] === number) return mid;
+
+    if (arr[mid] < number) left = mid + 1;
+    if (arr[mid] > number) right = mid - 1;
+  }
+};
+console.log(binary([23, 87, 65, 12, 57, 32, 99, 81], 32));
+
+/** 11. Decision - with binary */
+const getDVDLength = (songs, vol) => {
+  let answer = 0;
+  let left = songs[songs.length - 1];
+  let right = songs.reduce((prev, cur) => prev + cur, 0);
+
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2);
+    let count = 1;
+    let sum = 0;
+
+    for (let x of songs) {
+      if (sum + x > mid) {
+        count++;
+        sum = x;
+      } else {
+        sum += x;
+      }
+    }
+
+    if (count <= vol) {
+      right = mid - 1;
+      answer = mid;
+    } else {
+      left = mid + 1;
+    }
+  }
+
+  return answer;
+};
+console.log(
+  getDVDLength([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 3)
+);
