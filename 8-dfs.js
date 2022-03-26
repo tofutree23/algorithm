@@ -71,3 +71,99 @@ const sameSumSubset = (arr) => {
   return answer;
 };
 console.log(sameSumSubset([1, 3, 5, 6, 7, 10]));
+
+/** 6. DFS - Binary tree */
+const getGo = (arr) => {
+  const limit = 259;
+  let answer = Number.MIN_SAFE_INTEGER;
+  (function DFS(layer, sum) {
+    if (sum > limit) return;
+    if (layer === arr.length) {
+      answer = Math.max(answer, sum);
+    } else {
+      DFS(layer + 1, sum + arr[layer]);
+      DFS(layer + 1, sum);
+    }
+  })(0, 0);
+  return answer;
+};
+console.log(getGo([81, 58, 42, 33, 61]));
+
+/** 7. DFS - Max score */
+const getMaxScore = (arrScore, arrTime) => {
+  const limit = 20;
+  let answer = 0;
+  (function DFS(layer, sum, time) {
+    if (time > limit) return;
+    if (layer === arrScore.length) {
+      answer = Math.max(answer, sum);
+    } else {
+      DFS(layer + 1, sum + arrScore[layer], time + arrTime[layer]);
+      DFS(layer + 1, sum, time);
+    }
+  })(0, 0, 0);
+  return answer;
+};
+console.log(getMaxScore([10, 25, 15, 6, 7], [5, 12, 8, 3, 4]));
+
+/** 8. Duplicated permutation */
+const getDuplicatedPermutation = (n, m) => {
+  let answer = [];
+  let temp = new Array(m).fill(0);
+  (function DFS(layer) {
+    if (layer === m) {
+      answer.push(temp.slice());
+    } else {
+      for (let i = 1; i <= n; i++) {
+        temp[layer] = i;
+        DFS(layer + 1);
+      }
+    }
+  })(0);
+  return answer;
+};
+console.log(getDuplicatedPermutation(3, 2));
+
+/** 9. Coin combination */
+const coinCombi = (price, arr) => {
+  let answer = Number.MAX_SAFE_INTEGER;
+
+  (function DFS(layer, sum) {
+    if (sum > price) return;
+    if (layer >= answer) return;
+    if (sum === price) {
+      answer = Math.min(answer, layer);
+      return;
+    }
+    for (let i = 0; i < arr.length; i++) {
+      DFS(layer + 1, sum + arr[i]);
+    }
+  })(0, 0);
+
+  return answer;
+};
+console.log(coinCombi(15, [1, 2, 5]));
+
+/** 10. Permutation */
+const getPermutation = (m, arr) => {
+  const answer = [];
+  const temp = new Array(m).fill(0);
+  const check = new Array(m).fill(false);
+
+  (function DFS(layer) {
+    if (layer === m) {
+      answer.push(temp.slice());
+      return;
+    }
+    for (let i = 0; i < arr.length; i++) {
+      if (!check[i]) {
+        check[i] = true;
+        temp[layer] = arr[i];
+        DFS(layer + 1);
+        check[i] = false;
+      }
+    }
+  })(0);
+  return answer;
+};
+console.log(getPermutation(2, [3, 6, 9]));
