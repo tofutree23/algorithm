@@ -167,3 +167,32 @@ const getPermutation = (m, arr) => {
   return answer;
 };
 console.log(getPermutation(2, [3, 6, 9]));
+
+/** 11. DFS - Factorial */
+const getFactorial = (number) => {
+  if (number === 1) return 1;
+  return number * getFactorial(number - 1);
+};
+console.log(getFactorial(5));
+
+/** 12. Memoization - Combination */
+const getCombination = (n, r) => {
+  if (n === r || r === 0) return 1;
+  return getCombination(n - 1, r - 1) + getCombination(n - 1, r);
+};
+console.log(getCombination(5, 3));
+
+const getCombinationWithMemoization = (n, r, memo = []) => {
+  /** I don't know why this is different */
+  const arrType1 = Array(n + 1).fill(Array(r + 1).fill(0));
+  const arrType2 = Array.from(Array(n + 1), () => Array(r + 1).fill(0));
+  memo = memo.length === 0 ? arrType2 : memo;
+  if (memo[n][r] > 0) return memo[n][r];
+  if (n === r || r === 0) return 1;
+  return (memo[n][r] =
+    getCombinationWithMemoization(n - 1, r - 1, memo) +
+    getCombinationWithMemoization(n - 1, r, memo));
+};
+console.time("memo");
+console.log(getCombinationWithMemoization(33, 19));
+console.timeEnd("memo");
