@@ -185,6 +185,16 @@ console.log(getCombination(5, 3));
 const getCombinationWithMemoization = (n, r, memo = []) => {
   /** I don't know why this is different */
   const arrType1 = Array(n + 1).fill(Array(r + 1).fill(0));
+  /** Next day....
+   *
+   * Now I know the reason...
+   * if make array like type 1, Array(r + 1).fill(0) will be copied all row array..
+   *
+   * const newArr = Array(3).fill(Array(3).fill(0));
+   * console.log(newArr, "new"); // [[0,0,0], [0,0,0], [0,0,0]]
+   * newArr[0][0] = 100;
+   * console.log(newArr, "hahahaa"); // [[100,0,0], [100,0,0], [100,0,0]]
+   */
   const arrType2 = Array.from(Array(n + 1), () => Array(r + 1).fill(0));
   memo = memo.length === 0 ? arrType2 : memo;
   if (memo[n][r] > 0) return memo[n][r];
@@ -193,6 +203,90 @@ const getCombinationWithMemoization = (n, r, memo = []) => {
     getCombinationWithMemoization(n - 1, r - 1, memo) +
     getCombinationWithMemoization(n - 1, r, memo));
 };
-console.time("memo");
 console.log(getCombinationWithMemoization(33, 19));
-console.timeEnd("memo");
+
+/** 13. Pascal's triangle */
+const getTriangle = (n, total) => {
+  const answer = [];
+  const memo = Array.from(Array(n + 1), () => Array(n + 1).fill(0));
+  const check = Array(n + 1).fill(false);
+  const p = Array(n).fill(0);
+  const p2 = [];
+  const b = Array(n).fill(0);
+  let flag = false;
+
+  function combination(n, r) {
+    if (memo[n][r] > 0) return memo[n][r];
+    if (n === r || r === 0) return 1;
+    return (memo[n][r] = combination(n - 1, r - 1) + combination(n - 1, r));
+  }
+
+  function DFS(layer, sum) {
+    if (flag) return;
+    if (layer === n && sum === total) {
+      flag = true;
+      answer.push([...p.slice()]);
+      return;
+    } else {
+      for (let i = 1; i <= n; i++) {
+        if (!check[i]) {
+          check[i] = true;
+          p[layer] = i;
+          // alter
+          p2.push(i);
+          DFS(layer + 1, sum + b[layer] * p[layer]);
+          check[i] = false;
+          // alter
+          p2.pop();
+        }
+      }
+    }
+  }
+
+  for (let i = 0; i < n; i++) {
+    b[i] = combination(n - 1, i);
+  }
+  DFS(0, 0);
+
+  return answer.flat();
+};
+console.log(getTriangle(4, 16));
+
+const getCombination2 = (number, length) => {
+  const answer = [];
+  const temp = Array(length).fill(0);
+
+  /** for loop start from 1 */
+  (function DFS(layer, start) {
+    if (layer === length) {
+      answer.push(temp.slice());
+      return;
+    }
+
+    for (let i = start; i <= number; i++) {
+      temp[layer] = i;
+      DFS(layer + 1, i + 1);
+    }
+  })(0, 1);
+
+  return answer;
+};
+console.log(getCombination2(4, 2));
+
+const getNumberCombination = (level, numbers, multiple) => {
+  let answer = 0;
+
+  (function DFS(layer, start, sum) {
+    if (layer === level) {
+      if (sum % multiple === 0) answer++;
+      return;
+    }
+
+    for (let i = start; i < numbers.length; i++) {
+      DFS(layer + 1, i + 1, sum + numbers[i]);
+    }
+  })(0, 0, 0);
+
+  return answer;
+};
+console.log(getNumberCombination(3, [2, 4, 5, 8, 12], 6));
