@@ -84,3 +84,42 @@ console.log(
     [4, 5],
   ])
 );
+
+/** 3. Maze */
+const findMaze = (maze) => {
+  let answer = 0;
+  const dx = [-1, 0, 1, 0];
+  const dy = [0, 1, 0, -1];
+
+  maze[0][0] = 1;
+
+  (function DFS(x, y) {
+    if (x === 6 && y === 6) {
+      answer++;
+      return;
+    }
+    for (let i = 0; i < dx.length; i++) {
+      const nx = x + dx[i];
+      const ny = y + dy[i];
+
+      if (nx >= 0 && ny >= 0 && nx <= 6 && ny <= 6 && !maze[nx][ny]) {
+        maze[nx][ny] = 1;
+        DFS(nx, ny);
+        maze[nx][ny] = 0;
+      }
+    }
+  })(0, 0);
+
+  return answer;
+};
+console.log(
+  findMaze([
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 1, 1, 1, 1, 0],
+    [0, 0, 0, 1, 0, 0, 0],
+    [1, 1, 0, 1, 0, 1, 1],
+    [1, 1, 0, 0, 0, 0, 1],
+    [1, 1, 0, 1, 1, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0],
+  ])
+);
