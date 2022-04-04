@@ -123,3 +123,25 @@ console.log(
     [1, 0, 0, 0, 0, 0, 0],
   ])
 );
+
+/** 4. BFS */
+/**
+ * BFS is mainly used for shortest distance search and uses queue.
+ */
+const BFS = () => {
+  const answer = [];
+  const queue = [];
+  queue.push(1);
+  while (queue.length) {
+    const v = queue.shift();
+    answer.push(v);
+
+    for (let nv of [v * 2, v * 2 + 1]) {
+      if (nv > 7) continue;
+      queue.push(nv);
+    }
+  }
+
+  return answer;
+};
+console.log(BFS());
