@@ -145,3 +145,28 @@ const BFS = () => {
   return answer;
 };
 console.log(BFS());
+
+/** 5. Find calf */
+const findCalf = (s, calf) => {
+  const check = Array(10001).fill(0);
+  const distance = Array(10001).fill(0);
+
+  const queue = [];
+  check[s] = 1;
+  queue.push(s);
+
+  while (queue.length) {
+    const x = queue.shift();
+
+    for (let next of [x - 1, x + 1, x + 5]) {
+      if (next === calf) return distance[x] + 1;
+
+      if (next > 0 && next <= 10000 && check[next] === 0) {
+        check[next] = 1;
+        queue.push(next);
+        distance[next] = distance[x] + 1;
+      }
+    }
+  }
+};
+console.log(findCalf(5, 14));
