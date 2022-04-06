@@ -170,3 +170,65 @@ const findCalf = (s, calf) => {
   }
 };
 console.log(findCalf(5, 14));
+
+/** 6. Island - Zero is the Sea, One is the Land */
+const countIslandDFS = (map) => {
+  let answer = 0;
+  const dx = [-1, -1, 0, 1, 1, 1, 0, -1];
+  const dy = [0, 1, 1, 1, 0, -1, -1, -1];
+
+  const DFS = (x, y) => {
+    map[x][y] = 0;
+    for (let i = 0; i < dx.length; i++) {
+      const nextX = x + dx[i];
+      const nextY = y + dy[i];
+      if (
+        nextX >= 0 &&
+        nextY >= 0 &&
+        nextX < map.length &&
+        nextY < map.length &&
+        map[nextX][nextY]
+      ) {
+        DFS(nextX, nextY);
+      }
+    }
+  };
+
+  for (let i = 0; i < map.length; i++) {
+    for (let j = 0; j < map.length; j++) {
+      if (map[i][j] === 1) {
+        DFS(i, j);
+        answer++;
+      }
+    }
+  }
+
+  return answer;
+};
+console.log(
+  countIslandDFS([
+    [1, 1, 0, 0, 0, 1, 0],
+    [0, 1, 1, 0, 1, 1, 0],
+    [0, 1, 0, 0, 0, 0, 0],
+    [0, 0, 0, 1, 0, 1, 1],
+    [1, 1, 0, 1, 1, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0],
+    [1, 0, 1, 0, 1, 0, 0],
+  ])
+);
+
+const countIslandBFS = () => {
+  let answer = 0;
+  return answer;
+};
+console.log(
+  countIslandBFS([
+    [1, 1, 0, 0, 0, 1, 0],
+    [0, 1, 1, 0, 1, 1, 0],
+    [0, 1, 0, 0, 0, 0, 0],
+    [0, 0, 0, 1, 0, 1, 1],
+    [1, 1, 0, 1, 1, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0],
+    [1, 0, 1, 0, 1, 0, 0],
+  ])
+);
