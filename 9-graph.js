@@ -217,8 +217,40 @@ console.log(
   ])
 );
 
-const countIslandBFS = () => {
+const countIslandBFS = (map) => {
   let answer = 0;
+  const dx = [-1, -1, 0, 1, 1, 1, 0, -1];
+  const dy = [0, 1, 1, 1, 0, -1, -1, -1];
+  const queue = [];
+
+  for (let i = 0; i < map.length; i++) {
+    for (let j = 0; j < map.length; j++) {
+      if (map[i][j]) {
+        map[i][j] = 0;
+        queue.push([i, j]);
+        while (queue.length) {
+          const [x, y] = queue.shift();
+          for (let k = 0; k < dx.length; k++) {
+            const nextX = x + dx[k];
+            const nextY = y + dy[k];
+
+            if (
+              nextX >= 0 &&
+              nextX < map.length &&
+              nextY >= 0 &&
+              nextY < map.length &&
+              map[nextX][nextY]
+            ) {
+              map[nextX][nextY] = 0;
+              queue.push([nextX, nextY]);
+            }
+          }
+        }
+        answer++;
+      }
+    }
+  }
+
   return answer;
 };
 console.log(
