@@ -47,3 +47,17 @@ const getLTS = (arr) => {
   return answer;
 };
 console.log(getLTS([5, 3, 7, 8, 6, 2, 9, 4]));
+
+/** 4. Coin exchange - Knapsack */
+const getCoinExchange = (arr, amount) => {
+  const dynamic = Array(amount + 1).fill(1000);
+  dynamic[0] = 0;
+
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = arr[i]; j <= amount; j++) {
+      dynamic[j] = Math.min(dynamic[j], dynamic[j - arr[i]] + 1);
+    }
+  }
+  return dynamic[amount];
+};
+console.log(getCoinExchange([1, 2, 5], 15));
