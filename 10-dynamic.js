@@ -61,3 +61,29 @@ const getCoinExchange = (arr, amount) => {
   return dynamic[amount];
 };
 console.log(getCoinExchange([1, 2, 5], 15));
+
+/** 5. Maximum number */
+const maxPoint = (arr) => {
+  const timeLimit = 20;
+
+  const dynamic = Array(timeLimit + 1).fill(0);
+
+  for (let i = 0; i < arr.length; i++) {
+    const [point, time] = arr[i];
+
+    for (let j = timeLimit; j >= time; j--) {
+      dynamic[j] = Math.max(dynamic[j], dynamic[j - time] + point);
+    }
+  }
+
+  return dynamic[timeLimit];
+};
+console.log(
+  maxPoint([
+    [10, 5], // [point, time]
+    [25, 12],
+    [15, 8],
+    [6, 3],
+    [7, 4],
+  ])
+);
